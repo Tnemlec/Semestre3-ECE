@@ -1,0 +1,7 @@
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\bin\Debug\CoursExo.exe.config
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\bin\Debug\CoursExo.exe
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\bin\Debug\CoursExo.pdb
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\obj\Debug\CoursExo.csprojResolveAssemblyReference.cache
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\obj\Debug\CoursExo.csproj.CoreCompileInputs.cache
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\obj\Debug\CoursExo.exe
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\CoursExo\obj\Debug\CoursExo.pdb
