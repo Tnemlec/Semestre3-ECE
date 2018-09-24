@@ -10,9 +10,24 @@ namespace TD1
     {
         static void Main(string[] args)
         {
-            Voiture V1 = new Voiture("Mercedes", "C220", false, 2000, "rouge");//Ex2
+            //Ex 1 à 9
+
+            /*Voiture V1 = new Voiture("Mercedes", "C220", false, 2000, "rouge");//Ex2
             //Ex3: Non ce code ne fonctionne pas car il manque un get/set et lui meme commencera par une majuscule 
-            //Ex4: Le premier code est en effet valide cependant il manque la partiue set afin de pouvoir manipuler les attributs(leur donner une valeur)
+            //Ex4: Le premier code est en effet valide cependant il manque la partiue set afin de pouvoir manipuler les attributs(leur donner une valeur)*/
+
+            //Ex 10
+            Produit BriqueDeLait = new Produit("1", "BriqueDeLait", 2.00, 2);
+            Produit Cereale = new Produit("2", "Cereal", 2.00, 2);
+            Produit[] tab = new Produit[1];
+            tab[0] = BriqueDeLait;
+            Magasins Carrefour = new Magasins("Carrefour", tab);
+            Carrefour.AfficherProduits();
+            Console.ReadKey();
+            Carrefour.AjouterProduits(Cereale);
+            Carrefour.AfficherProduits();
+            Console.ReadKey();
+
         }
     }
 
@@ -129,7 +144,125 @@ namespace TD1
         private string libelle;
         private double prixHT;
         private int quantite;
+        static int nbProd;
+        private int numProd;
 
+        public Produit(string reference, string libelle, double prixHT, int quantite)
+        {
+            this.reference = reference;
+            this.libelle = libelle;
+            this.prixHT = prixHT;
+            this.quantite = quantite;
+            nbProd++;
+            numProd = nbProd;
+
+        }
+
+        public int Quantite
+        {
+            get { return quantite; }
+        }
+
+        public int NumProd
+        {
+            get { return numProd; }
+        }
+
+        public string Reference
+        {
+            get { return reference; }
+        }
+
+        public string Libelle
+        {
+            get { return libelle; }
+        }
+
+        public double PrixHT
+        {
+            get { return prixHT; }
+        }
+
+        public void AugmenterStock()
+        {
+            Console.WriteLine("Restockage... \n Combien d'éléments voulez-vous ajouter ?: \n");
+            int.TryParse(Console.ReadLine(), out int ajout);
+            quantite += ajout;
+        }
+
+        public void Vente(int nbProdVente)
+        {
+            if (quantite > nbProdVente) quantite -= nbProdVente;
+            else Console.WriteLine("Pas assez de produit en stock");
+        }
+
+        public double PrixTTC()
+        {
+            double prixTTC = prixHT + (prixHT * 0.055);
+            return prixTTC;
+        }
+
+        public void DecrireProd()
+        {
+            Console.WriteLine("Produit " + numProd + " : \n" + libelle + "\n " + "Prix hors taxes : " + prixHT + "\n Prix TTC : " + PrixTTC());
+        }
+
+        public void ComparaisonDeuxProds(Produit produit)
+        {
+            if (reference != produit.Reference)
+            {
+                Console.WriteLine("Comparaison du Produit " + numProd + " et du Produit " + produit.NumProd + "\n");
+                Console.WriteLine(libelle + " | " + produit.Libelle);
+                Console.WriteLine("PrixHT:" + prixHT + " | " + produit.PrixHT);
+                Console.WriteLine("PrixTTC: " + PrixTTC() + " | " + produit.PrixTTC());
+            }
+        }
+    }
+
+    class Magasins
+    {
+        private string nomMagasin;
+        Produit[] produits;
+        int nbProd;
+
+        public Magasins(string nomMagasin, Produit[] produits)
+        {
+            this.nomMagasin = nomMagasin;
+            this.produits = produits;
+        }
+
+        public void AjouterProduits(Produit produitAdd)
+        {
+            Produit[] tmp = new Produit[produits.Length + 1];
+            for(int i = 0;i < tmp.Length - 1; i++)
+            {
+                tmp[i] = produits[i];
+            }
+            tmp[produits.Length] = produitAdd;
+            produits = tmp;
+        }
+
+        public void SupprProduits(Produit produitSuppr)
+        {
+            Produit[] tmp = new Produit[produits.Length - 1];
+            for (int i = 0; i < tmp.Length - 1; i++)
+            {
+                if(tmp[i] != produitSuppr)
+                {
+                    tmp[i] = produits[i];
+                }
+                
+            }
+            produits = tmp;
+        }
+
+        public void AfficherProduits()
+        {
+            for(int i = 0; i < produits.Length;i++)
+            {
+                Console.WriteLine(produits[i].Libelle);
+            }
+        }
 
     }
 }
