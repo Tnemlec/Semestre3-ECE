@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace TD1
 {
@@ -21,12 +22,14 @@ namespace TD1
             Produit Cereale = new Produit("2", "Cereal", 2.00, 2);
             Produit[] tab = new Produit[1];
             tab[0] = BriqueDeLait;
-            Magasins Carrefour = new Magasins("Carrefour", tab);
+            Magasins Carrefour = new Magasins("Carrefour");
             Carrefour.AfficherProduits();
             Console.ReadKey();
             Carrefour.AjouterProduits(Cereale);
             Carrefour.AfficherProduits();
             Console.ReadKey();
+
+            
 
         }
     }
@@ -147,6 +150,8 @@ namespace TD1
         static int nbProd;
         private int numProd;
 
+        
+
         public Produit(string reference, string libelle, double prixHT, int quantite)
         {
             this.reference = reference;
@@ -217,43 +222,71 @@ namespace TD1
                 Console.WriteLine("PrixTTC: " + PrixTTC() + " | " + produit.PrixTTC());
             }
         }
-    }
+    }//Ex10
 
     class Magasins
     {
         private string nomMagasin;
         Produit[] produits;
-        int nbProd;
+        private int nbProd;
 
-        public Magasins(string nomMagasin, Produit[] produits)
+        public Magasins(string nomMagasin)
         {
             this.nomMagasin = nomMagasin;
-            this.produits = produits;
+            nbProd = 0;
         }
 
         public void AjouterProduits(Produit produitAdd)
         {
-            Produit[] tmp = new Produit[produits.Length + 1];
-            for(int i = 0;i < tmp.Length - 1; i++)
+            if(nbProd > 0)
             {
-                tmp[i] = produits[i];
+                nbProd++;
+                Produit[] tmp = new Produit[nbProd];
+                int i = 0;
+                for(i = 0;i < produits.Length; i++)
+                {
+                    tmp[i] = produits[i];
+                }
+                tmp[i] = produitAdd;
+                produits = tmp;
             }
-            tmp[produits.Length] = produitAdd;
-            produits = tmp;
+            else
+            {
+                nbProd++;
+                produits[0] = produitAdd;
+            }
+
+        }
+
+        private bool RechercheProduit(Produit produit)
+        {
+            bool res = false;
+            for(int i = 0; i < produits.Length; i++)
+            {
+                if(produits[i] == produit)
+                {
+                    res = true;
+                }
+            }
+            return res;
         }
 
         public void SupprProduits(Produit produitSuppr)
         {
-            Produit[] tmp = new Produit[produits.Length - 1];
-            for (int i = 0; i < tmp.Length - 1; i++)
+            if (RechercheProduit(produitSuppr))
             {
-                if(tmp[i] != produitSuppr)
+                Produit[] tmp = new Produit[produits.Length - 1];
+                for (int i = 0; i < tmp.Length - 1; i++)
                 {
-                    tmp[i] = produits[i];
-                }
+                    if(produits[i] != produitSuppr)
+                    {
+                        tmp[i] = produits[i];
+                    }
                 
+                }
+                produits = tmp;
             }
-            produits = tmp;
+
         }
 
         public void AfficherProduits()
@@ -264,5 +297,95 @@ namespace TD1
             }
         }
 
+    }//Ex10
+
+    class Joueurs
+    {
+        //Attributs
+
+        private string nom;
+        private bool role;//Si true : Guesseur, Si false : Finder
+        private bool homme;
+        //Constructeurs
+
+        public Joueurs(string nom, bool role, bool homme)
+        {
+            this.nom = nom;
+            this.role = role;
+            this.homme = homme;
+        }
+
+        //Propriétés
+
+        public string Nom
+        {
+            get { return nom; }
+        }
+
+        public bool Role
+        {
+            get { return role; }
+        }
+
+        public bool Homme
+        {
+            get { return homme; }
+        }
+
+        //Methodes
+
+        public string PropositionCode()
+        {
+            string code = "";
+            if(homme == true)
+            {
+                do
+                {
+                    Console.WriteLine("Saisir un code entier :");
+                    code = Console.ReadLine();
+                } while (code.Length != 4);
+
+            }
+            else
+            {
+                Random random = new Random();
+                for(int i = 0; i < 4; i++)
+                {
+                    System.Threading.Thread.Sleep(50);
+                    code += random.Next(0, 10).ToString();
+                }
+                
+           
+            }
+            return code;
+        }
+
+
+    }//Ex11
+
+    class Manche
+    {
+        //Attributs
+        private string code;
+        private int nbTour;
+        private static int mancheActu = 0;
+        private int nbManche;
+        private Joueurs[] Joueurs;
+        //Constructeurs
+        public Manche(string code, Joueurs[] Joueurs)
+        {
+            this.code = code;
+            this.Joueurs = Joueurs;
+            mancheActu++;
+            nbManche = mancheActu;
+        }
+        //Methode
+
+        
+
+        public void MainCore()
+        {
+
+        }
     }
 }
