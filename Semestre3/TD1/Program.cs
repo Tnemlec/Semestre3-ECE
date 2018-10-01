@@ -18,7 +18,7 @@ namespace TD1
             //Ex4: Le premier code est en effet valide cependant il manque la partiue set afin de pouvoir manipuler les attributs(leur donner une valeur)*/
 
             //Ex 10
-            Produit BriqueDeLait = new Produit("1", "BriqueDeLait", 2.00, 2);
+            /*Produit BriqueDeLait = new Produit("1", "BriqueDeLait", 2.00, 2);
             Produit Cereale = new Produit("2", "Cereal", 2.00, 2);
             Produit[] tab = new Produit[1];
             tab[0] = BriqueDeLait;
@@ -27,8 +27,15 @@ namespace TD1
             Console.ReadKey();
             Carrefour.AjouterProduits(Cereale);
             Carrefour.AfficherProduits();
-            Console.ReadKey();
+            Console.ReadKey();*/
 
+
+            Joueurs joueur1 = new Joueurs("Clement", false, false);
+            Joueurs joueur2 = new Joueurs("RobiLOrdi", true, true);
+
+            Partie partie = new Partie(joueur1, joueur2);
+            partie.StartPartie();
+            Console.ReadKey();
             
 
         }
@@ -304,8 +311,9 @@ namespace TD1
         //Attributs
 
         private string nom;
-        private bool role;//Si true : Guesseur, Si false : Finder
+        private bool role;//Si true : Guesseur, Si false : Setteur
         private bool homme;
+        private int score;
         //Constructeurs
 
         public Joueurs(string nom, bool role, bool homme)
@@ -325,11 +333,18 @@ namespace TD1
         public bool Role
         {
             get { return role; }
+            set { role = value; }
         }
 
         public bool Homme
         {
             get { return homme; }
+        }
+
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
         }
 
         //Methodes
@@ -341,7 +356,7 @@ namespace TD1
             {
                 do
                 {
-                    Console.WriteLine("Saisir un code entier :");
+                    Console.WriteLine(nom + " : Saisir un code entier :");
                     code = Console.ReadLine();
                 } while (code.Length != 4);
 
@@ -351,7 +366,6 @@ namespace TD1
                 Random random = new Random();
                 for(int i = 0; i < 4; i++)
                 {
-                    System.Threading.Thread.Sleep(50);
                     code += random.Next(0, 10).ToString();
                 }
                 
@@ -362,30 +376,269 @@ namespace TD1
 
 
     }//Ex11
-
     class Manche
     {
         //Attributs
         private string code;
-        private int nbTour;
+        private int nbTour = 0;
         private static int mancheActu = 0;
         private int nbManche;
-        private Joueurs[] Joueurs;
+        private Joueurs joueur1;
+        private Joueurs joueur2;
+
+
         //Constructeurs
-        public Manche(string code, Joueurs[] Joueurs)
+        public Manche(string code, Joueurs joueur1, Joueurs joueur2)
         {
             this.code = code;
-            this.Joueurs = Joueurs;
+            this.joueur1 = joueur1;
+            this.joueur2 = joueur2;
             mancheActu++;
             nbManche = mancheActu;
         }
+
+        //Propriété
+
         //Methode
-
-        
-
-        public void MainCore()
+        private bool[] TabVerif(string proposition)
         {
+            bool[] tab = new bool[4];
+            for(int i = 0; i < 4; i++)
+            {
+                if(proposition[i] == code[i])
+                {
+                    tab[i] = true;
+                }
+            }
+            return tab;
+        }
+
+
+        public void MainCoreHomme(Joueurs joueur1)
+        {
+            bool[] tab = new bool[4];
+            string proposition;
+            bool finDeManche = false;
+            
+            
+            if (joueur1.Role == true && joueur1.Homme == true)
+            {
+                do
+                {
+                    nbTour++;
+                    do
+                    {
+                        Console.WriteLine(joueur1.Nom + " : Proposition entre 0000 et 9999");
+                        proposition = Console.ReadLine();
+                        try
+                        {
+                            int nombre = int.Parse(proposition);
+                        }
+                        catch
+                        {
+                            proposition = "               ";
+                        }
+                    } while (proposition.Length != 4);
+                    tab = TabVerif(proposition);
+                    int nbBon = 0;
+                    for(int i = 0; i < 4; i++)
+                    {
+                        if (tab[i])
+                        {
+                            nbBon++;
+                        }
+                    }
+                    if(nbBon == 4)
+                    {
+                        Console.WriteLine("Bravo vous avez trouvé que le code était : " + code + " en " + nbTour + "tours ");
+                        finDeManche = true;
+                        joueur1.Score += nbTour;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Il y a " + nbBon + " nombre bien placé et " + (4 - nbBon) + " mal placé");
+
+                    }
+
+                } while (finDeManche == false);
+
+            }
+        }
+
+        public void MainCoreMachine(Joueurs joueur1)
+        {
+            string proposition = joueur1.PropositionCode();
+            bool[] verif = TabVerif(proposition);
+            int nbBon = 0;
+            bool finDeManche = false;
+            do
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (verif[i])
+                    {
+                        nbBon++;
+                    }
+                }
+                if (nbBon == 4)
+                {
+                    Console.WriteLine("La machine a trouvé que le code était : " + code + " en " + nbTour + "tours ");
+                    finDeManche = true;
+                    joueur1.Score += nbTour;
+                }
+                else
+                {
+                    Console.WriteLine("Il y a " + nbBon + " nombre bien placé et " + (4 - nbBon) + " mal placé");
+
+                }
+                nbTour++;
+            } while (finDeManche == true);
+
 
         }
-    }
+    }//Ex11
+    class Partie
+    {
+        //Attributs
+        private Joueurs joueur1;
+        private Joueurs joueur2;
+        private Manche[] manche;
+        private int nbManche = -1;
+
+        //Constructeur
+        public Partie(Joueurs joueur1, Joueurs joueur2)
+        {
+            this.joueur1 = joueur1;
+            this.joueur2 = joueur2;
+        }
+        //Propriété
+
+        //Methode
+       
+
+        public void StartPartie()
+        {
+            do
+            {
+                StartManche();
+                nbManche++;
+                QuelManche();                
+                EchangerRole();
+                StartManche();
+                nbManche++;
+                QuelManche();
+                EchangerRole();
+                Joueurs gagnant = Gagnant();
+                Console.WriteLine("Le gagnant est : " + gagnant.Nom + " avec un score de : " + gagnant.Score);
+                
+                Console.WriteLine("Voulez-vous rejouer une partie ? Y/N");
+            } while (Console.ReadLine() == "Y");      
+            
+        }
+
+        private void QuelManche()
+        {
+            if (joueur1.Role && joueur1.Homme)
+            {
+                manche[nbManche].MainCoreHomme(joueur1);
+            }
+            else
+            {
+                if (joueur2.Role && joueur2.Homme)
+                {
+                    manche[nbManche].MainCoreHomme(joueur2);
+                }
+                else
+                {
+                    if (joueur1.Role && joueur1.Homme == false)
+                    {
+                        manche[nbManche].MainCoreMachine(joueur1);
+                    }
+                    else
+                    {
+                        if (joueur2.Role && joueur2.Homme == false)
+                        {
+                            manche[nbManche].MainCoreMachine(joueur2);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void StartManche()
+        {
+            Manche manches;
+            if (joueur1.Role)
+            {
+                manches = new Manche(joueur2.PropositionCode(), joueur1, joueur2);
+            }
+            else
+            {
+                manches = new Manche(joueur1.PropositionCode(), joueur1, joueur2);
+            }
+
+            if (nbManche >= 0)
+            {
+                Manche[] temp = new Manche[manche.Length + 1];
+                for(int i = 0; i < manche.Length; i++)
+                {
+                    temp[i] = manche[i];
+                }
+                temp[manche.Length] = manches;
+                manche = temp;
+            }
+            else
+            {
+                
+                Manche[] temp = new Manche[1];
+                temp[0] = manches;
+                manche = temp;
+            }
+
+
+        }
+
+        private Joueurs Gagnant()
+        {
+            Joueurs gagnant;
+            if(joueur1.Score < joueur2.Score)
+            {
+                gagnant = joueur1;
+            }
+            else
+            {
+                gagnant = joueur2;
+            }
+            return gagnant;
+        }
+
+        private void EchangerRole()
+        {
+            if(joueur1.Role == true)
+            {
+                joueur1.Role = false;
+                joueur2.Role = true;
+            }
+            else
+            {
+                joueur1.Role = true;
+                joueur2.Role = false;
+            }
+        }
+
+        private void AttributeurDeRole()
+        {
+            Console.WriteLine("Qui commence (Setteur) ? 1 ou 2");
+            if (Console.ReadLine() == "1")
+            {
+                joueur1.Role = false; //False = Setteur;
+                joueur2.Role = true; //True = Guesseur;
+            }
+            else
+            {
+                joueur1.Role = true;
+                joueur2.Role = false;
+            }
+        }
+    }//Ex11
 }
