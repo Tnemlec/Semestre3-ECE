@@ -235,6 +235,7 @@ namespace TD1
     {
         private string nomMagasin;
         Produit[] produits;
+        List<Produit> listeProduit = new List<Produit>();
         private int nbProd;
 
         public Magasins(string nomMagasin)
@@ -263,6 +264,11 @@ namespace TD1
                 produits[0] = produitAdd;
             }
 
+        }
+
+        public void AjouterProduitBis(Produit produitAdd)
+        {
+            listeProduit.Add(produitAdd);
         }
 
         private bool RechercheProduit(Produit produit)
@@ -296,11 +302,24 @@ namespace TD1
 
         }
 
+        public void SupprProduitsBis(Produit produitSuppr)
+        {
+            listeProduit.Remove(produitSuppr);
+        }
+
         public void AfficherProduits()
         {
             for(int i = 0; i < produits.Length;i++)
             {
                 Console.WriteLine(produits[i].Libelle);
+            }
+        }
+
+        public void AfficherProduitBis()
+        {
+            foreach(Produit c in listeProduit)
+            {
+                Console.WriteLine(c.ToString());//Here create a toString() method
             }
         }
 
@@ -376,6 +395,7 @@ namespace TD1
 
 
     }//Ex11
+
     class Manche
     {
         //Attributs
@@ -497,6 +517,7 @@ namespace TD1
 
         }
     }//Ex11
+
     class Partie
     {
         //Attributs
