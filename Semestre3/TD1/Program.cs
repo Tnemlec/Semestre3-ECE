@@ -13,8 +13,9 @@ namespace TD1
         {
             //Ex 1 à 9
 
-            /*Voiture V1 = new Voiture("Mercedes", "C220", false, 2000, "rouge");//Ex2
-            //Ex3: Non ce code ne fonctionne pas car il manque un get/set et lui meme commencera par une majuscule 
+            Voiture V1 = new Voiture("Mercedes", "C220", false, 2000, "rouge");//Ex2
+            Voiture V2 = new Voiture("Mercedes", "C220", false, 2000, "rouge");
+            /*//Ex3: Non ce code ne fonctionne pas car il manque un get/set et lui meme commencera par une majuscule 
             //Ex4: Le premier code est en effet valide cependant il manque la partiue set afin de pouvoir manipuler les attributs(leur donner une valeur)*/
 
             //Ex 10
@@ -30,11 +31,14 @@ namespace TD1
             Console.ReadKey();*/
 
 
-            Joueurs joueur1 = new Joueurs("Clement", false, false);
+            /*Joueurs joueur1 = new Joueurs("Clement", false, false);
             Joueurs joueur2 = new Joueurs("RobiLOrdi", true, true);
 
             Partie partie = new Partie(joueur1, joueur2);
             partie.StartPartie();
+            Console.ReadKey();*/
+
+            Console.WriteLine(V1.NbVoit);
             Console.ReadKey();
             
 
@@ -48,7 +52,7 @@ namespace TD1
         private int anneeCirculation;
         private bool berline;
         private string couleur;
-        static int nbVoit = 0;
+        private static int nbVoit = 0;
         private int numVoit = 0;
 
         public Voiture(string marque,string modele,bool berline,int anneeCirculation,string couleur)//Ex2
@@ -109,6 +113,14 @@ namespace TD1
             get
             {
                 return couleur;
+            }
+        }
+
+        public int NbVoit
+        {
+            get
+            {
+                return nbVoit;
             }
         }
 

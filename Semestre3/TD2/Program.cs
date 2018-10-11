@@ -285,4 +285,187 @@ namespace TD2
             Lecon l = new Lecon(date, "1h", apprentis[a], moniteurs[m], vehicule[v]);
         }
     }
+
+    class Article
+    {
+        //Attributs
+        private string nom;
+        private int quantite;
+        private bool type;//True = Bon 
+
+        //Constructeurs
+        public Article(string nom, int quantite, bool type)
+        {
+            this.nom = nom;
+            this.quantite = quantite;
+            this.type = type;
+        }
+        //Propriete
+        public int Quantite
+        {
+            get
+            {
+                return quantite;
+            }
+            set
+            {
+                quantite = value;
+            }
+        }
+        public string Nom
+        {
+            get
+            {
+                return nom;
+            }
+        }
+
+        //Methode
+        public string toString()
+        {
+            string stg = "";
+            stg = "Nom: " + nom + "\nQuantite: " + quantite + "\nType: " + type;
+            return stg;
+        }
+
+
+    }
+    class Rayon
+    {
+        //Attribut
+        private string libelle;
+        private List<Article> ListArt;
+        //Constructeurs
+        public Rayon(string libelle, List<Article> ListArt)
+        {
+            this.libelle = libelle;
+            this.ListArt = ListArt;
+        }
+    }
+    class Client
+    {
+        //Attribut
+        private string nom;
+        private List<Article> listArt;
+        //Constructeurs
+        public Client(string nom)
+        {
+            this.nom = nom;
+            listArt = new List<Article>();
+        }
+        //Propriete
+        public List<Article> ListArt
+        {
+            get
+            {
+                return listArt;
+            }
+        }
+        //Methode
+        public void AjouterArt(Article a)
+        {
+            listArt.Add(a);
+        }
+    }
+    class Fournisseur
+    {
+        private string nom;
+        private List<Article> listArt;
+        //Constructeur
+        public Fournisseur(string nom, List<Article> listArt)
+        {
+            this.nom = nom;
+            this.listArt = listArt;
+        }
+        //Propriete
+        public List<Article> ListArt
+        {
+            get
+            {
+                return listArt;
+            }
+        }
+    }
+    class Magasin
+    {
+        //Attribut
+        private string nom;
+        private List<Article> listArticle;
+        private List<Client> listClient;
+        private List<Fournisseur> listFournisseur;
+        private List<Rayon> listRayon;
+
+        //Constructeur
+        public Magasin(string nom)
+        {
+            this.nom = nom;
+            listArticle = new List<Article>();
+            listClient = new List<Client>();
+            listFournisseur = new List<Fournisseur>();
+            listRayon = new List<Rayon>();
+        }
+
+        public void AjouterArticle(Article a)
+        {
+            listArticle.Add(a);
+        }
+        public void AjouterClient(Client a)
+        {
+            listClient.Add(a);
+        }
+        public void AjouterRayon(Rayon a)
+        {
+            listRayon.Add(a);
+        }
+        public void AjouterFournisseur(Fournisseur a)
+        {
+            listFournisseur.Add(a);
+        }
+
+        public void AjouterStock(Fournisseur f)
+        {
+            for(int i = 0; i < listArticle.Count; i++)
+            {
+                for(int j = 0; j< f.ListArt.Count; j++)
+                {
+                    if(listArticle[i].Nom == f.ListArt[j].Nom)
+                    {
+                        listArticle[i].Quantite += f.ListArt[j].Quantite;
+                    }
+                }
+            }
+        }
+        public void SupprStock(Client c)
+        {
+            for(int i = 0; i < listArticle.Count; i++)
+            {
+                for(int j = 0; j < c.ListArt.Count; j++)
+                {
+                    if(listArticle[i].Nom == c.ListArt[j].Nom)
+                    {
+                        listArticle[i].Quantite -= c.ListArt[j].Quantite;
+                    }
+                }
+            }
+        }
+        public bool RechercherProd(Article abc)
+        {
+            bool verif = false;
+            foreach(Article a in listArticle)
+            {
+                if(a.Nom == abc.Nom)
+                {
+                    verif = true;
+                }
+            }
+            return verif;
+        }
+        public void AfficherStock()
+        {
+            foreach(Article a in listArticle)
+            {
+                Console.WriteLine(a.toString());
+            }
+        }
+    }
 }
