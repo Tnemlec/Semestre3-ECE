@@ -10,6 +10,7 @@ namespace TD2
     {
         static void Main(string[] args)
         {
+            
         }
     }
 
@@ -386,7 +387,7 @@ namespace TD2
             }
         }
     }
-    class Magasin
+    class Magasin 
     {
         //Attribut
         private string nom;
@@ -450,14 +451,7 @@ namespace TD2
         }
         public bool RechercherProd(Article abc)
         {
-            bool verif = false;
-            foreach(Article a in listArticle)
-            {
-                if(a.Nom == abc.Nom)
-                {
-                    verif = true;
-                }
-            }
+            bool verif = listArticle.Contains(abc);
             return verif;
         }
         public void AfficherStock()
