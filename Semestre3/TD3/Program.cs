@@ -313,5 +313,74 @@ namespace TD3
         }
     }
 
+    //Ex3
+    class Restaurant0Etoiles
+    {
+        protected string nom;
+        protected string adresse;
+        protected string heureOuverture;
+        protected string heureFermeture;
+        protected int nbOuvrier;
 
+        public Restaurant0Etoiles(string nom, string adresse, string heureOuverture, string heureFermeture, int nbOuvrier)
+        {
+            this.nom = nom;
+            this.adresse = adresse;
+            this.heureOuverture = heureOuverture;
+            this.heureFermeture = heureFermeture;
+            this.nbOuvrier = nbOuvrier;
+
+        }
+
+        public override string ToString()
+        {
+            string stg = "Nom : " + nom + "\nAdresse : " + adresse + "\nHeure d'ouverture : " + heureOuverture + "\nHeure de fermeture : " + heureFermeture + "\nNombre ouvrier : " + nbOuvrier;
+            return stg;
+        }
+
+        public virtual void calculCout()
+        {
+            Console.WriteLine(70 * nbOuvrier);
+
+        }
+
+
+    }
+    class Restaurant1Etoiles : Restaurant0Etoiles
+    {
+        protected int nbChef;
+
+        public Restaurant1Etoiles(string nom, string adresse, string heureOuverture, string heureFermeture, int nbOuvrier, int nbChef):base( nom,  adresse,  heureOuverture,  heureFermeture, nbOuvrier)
+        {
+            this.nbChef = nbChef;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nNombre de chef : " + nbChef;
+        }
+
+        public override void calculCout()
+        {
+            Console.WriteLine(70 * nbOuvrier + 110 * nbChef);
+        }
+    }
+    class Restaurant2Etoiles : Restaurant1Etoiles
+    {
+        private int nbServeur;
+        public Restaurant2Etoiles(string nom, string adresse, string heureOuverture, string heureFermeture, int nbOuvrier, int nbChef, int nbServeur):base( nom,  adresse,  heureOuverture,  heureFermeture,  nbOuvrier,  nbChef)
+        {
+            this.nbChef = nbChef;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\nNombre de serveur : " + nbServeur;
+        }
+
+        public override void calculCout()
+        {
+            Console.WriteLine(70 * nbOuvrier + 110 * nbChef + 85 * nbServeur);
+        }
+    }
 }
