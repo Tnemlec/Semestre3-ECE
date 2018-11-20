@@ -326,7 +326,6 @@ namespace TD4
             return base.ToString() + "\nLe produit est liquide : " + liquide + "\nLe prix TTC de ce produit est : " + prixTTC;
         }
     }
-
     class Fournisseur
     {
         private string nom;
@@ -364,7 +363,6 @@ namespace TD4
         }
 
     }
-
     class Magasins
     {
         private string nom;

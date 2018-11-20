@@ -1,0 +1,5 @@
+﻿[Échec] Le fichier 'C:\Users\lajou\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs' est introuvable.
+[Échec] Le fichier 'C:\Users\lajou\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs' est introuvable.
+[Échec] Le fichier 'C:\Users\lajou\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs' est introuvable.
+[Échec] Le fichier 'C:\Users\lajou\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs' est introuvable.
+[Échec] Le fichier 'C:\Users\lajou\AppData\Local\Temp\.NETFramework,Version=v4.6.1.AssemblyAttributes.cs' est introuvable.
