@@ -193,4 +193,96 @@ namespace CoursExo
             Console.WriteLine("Il avale");
         }
     }
+
+    //Cours Interface
+    abstract class ComptE
+    {
+        protected int numCompte;
+        protected string nomClient;
+        protected string prenomClient;
+        protected string adresseClient;
+        protected double solde;
+
+        public ComptE(int numCompte, string nomClient, string prenomClient, string adresseClient, double solde)
+        {
+            this.nomClient = nomClient;
+            this.numCompte = numCompte;
+            this.prenomClient = prenomClient;
+            this.adresseClient = adresseClient;
+            this.solde = solde;
+        }
+
+        public override string ToString()
+        {
+            return "Nom Client : " + nomClient + "Num Client : " + numCompte + "Prenom Client : " + prenomClient + "adresse : " + adresseClient + "Solde : " + solde;
+        }
+    }
+
+    class CompteCheque : ComptE
+    {
+        private double frais;
+        private bool saliare;
+
+        public CompteCheque(int numCompte, string nomClient, string prenomClient, string adresseClient, double solde, bool saliare):base( numCompte,  nomClient,  prenomClient,  adresseClient,  solde)
+        {
+            
+            this.saliare = saliare;
+            if (saliare)
+            {
+                frais = 10;
+            }
+            else
+            {
+                frais = 5;
+            }
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "Frais : " + frais + "salaire : " + saliare;
+        }
+
+    }
+
+    interface ICompte
+    {
+        void AjoutInteret();
+    }
+
+    class LivretAJeune : ComptE, ICompte
+    {
+        public LivretAJeune(int numCompte, string nomClient, string prenomClient, string adresseClient, double solde):base( numCompte,  nomClient,  prenomClient,  adresseClient,  solde)
+        {
+
+        }
+
+        public void AjoutInteret()
+        {
+            solde *= 1.7;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
+
+    class LivretAMajeur : ComptE, ICompte
+    {
+        public LivretAMajeur(int numCompte, string nomClient, string prenomClient, string adresseClient, double solde) : base(numCompte, nomClient, prenomClient, adresseClient, solde)
+        {
+
+        }
+
+        public void AjoutInteret()
+        {
+            solde *= 1.5;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
 }
+

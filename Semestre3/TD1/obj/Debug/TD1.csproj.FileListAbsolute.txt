@@ -1,7 +1,7 @@
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\bin\Debug\TD1.exe.config
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\bin\Debug\TD1.exe
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\bin\Debug\TD1.pdb
-C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\obj\Debug\TD1.csprojResolveAssemblyReference.cache
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\obj\Debug\TD1.csproj.CoreCompileInputs.cache
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\obj\Debug\TD1.exe
 C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\obj\Debug\TD1.pdb
+C:\Users\lajou\Desktop\Semestre 3\Informatique\TD-ECE\Semestre3\TD1\obj\Debug\TD1.csprojAssemblyReference.cache
